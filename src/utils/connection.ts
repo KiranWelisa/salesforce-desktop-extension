@@ -1,5 +1,5 @@
 import jsforce from 'jsforce';
-import { ConnectionType, ConnectionConfig } from '../types/connection.js';
+import { ConnectionType } from '../types/connection.js';
 import https from 'https';
 import querystring from 'querystring';
 
@@ -54,8 +54,8 @@ export async function createSalesforceConnection() {
               } else {
                 resolve(parsed);
               }
-            } catch (e) {
-              reject(new Error(`Failed to parse OAuth response: ${e}`));
+            } catch (e: any) {
+              reject(new Error(`Failed to parse OAuth response: ${e.message}`));
             }
           });
         });

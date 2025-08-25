@@ -1,5 +1,5 @@
 import { Tool } from "@modelcontextprotocol/sdk/types.js";
-import { MetadataInfo } from "../types/metadata";
+import { MetadataInfo } from "../types/metadata.js";
 
 export const MANAGE_OBJECT: Tool = {
   name: "salesforce_manage_object",
@@ -121,13 +121,13 @@ export async function handleManageObject(conn: any, args: ManageObjectArgs) {
       }
 
       // Prepare update metadata
-      const metadata = {
+      const metadata: any = {
         ...currentMetadata,
         label: label || currentMetadata.label,
         pluralLabel: pluralLabel || currentMetadata.pluralLabel,
         description: description !== undefined ? description : currentMetadata.description,
         sharingModel: sharingModel || currentMetadata.sharingModel
-      } as MetadataInfo;
+      };
 
       // Update the object using Metadata API
       const result = await conn.metadata.update('CustomObject', metadata);

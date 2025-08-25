@@ -1,5 +1,5 @@
 import { Tool } from "@modelcontextprotocol/sdk/types.js";
-import { SalesforceField, SalesforceDescribeResponse } from "../types/salesforce";
+import { SalesforceField, SalesforceDescribeResponse } from "../types/salesforce.js";
 
 export const DESCRIBE_OBJECT: Tool = {
   name: "salesforce_describe_object",

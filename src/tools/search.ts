@@ -1,5 +1,5 @@
 import { Tool } from "@modelcontextprotocol/sdk/types.js";
-import { SalesforceObject } from "../types/salesforce";
+import { SalesforceObject } from "../types/salesforce.js";
 
 export const SEARCH_OBJECTS: Tool = {
   name: "salesforce_search_objects",
