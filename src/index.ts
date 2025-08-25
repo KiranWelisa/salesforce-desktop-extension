@@ -17,7 +17,7 @@ import { DML_RECORDS, handleDMLRecords, DMLArgs } from "./tools/dml.js";
 import { MANAGE_OBJECT, handleManageObject, ManageObjectArgs } from "./tools/manageObject.js";
 import { MANAGE_FIELD, handleManageField, ManageFieldArgs } from "./tools/manageField.js";
 import { MANAGE_FIELD_PERMISSIONS, handleManageFieldPermissions, ManageFieldPermissionsArgs } from "./tools/manageFieldPermissions.js";
-import { SEARCH_ALL, handleSearchAll, SearchAllArgs } from "./tools/searchAll.js";
+import { SEARCH_ALL, handleSearchAll, SearchAllArgs, WithClause } from "./tools/searchAll.js";
 import { READ_APEX, handleReadApex, ReadApexArgs } from "./tools/readApex.js";
 import { WRITE_APEX, handleWriteApex, WriteApexArgs } from "./tools/writeApex.js";
 import { READ_APEX_TRIGGER, handleReadApexTrigger, ReadApexTriggerArgs } from "./tools/readApexTrigger.js";
@@ -42,9 +42,9 @@ const server = new Server(
 // Tool handlers
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
   tools: [
-    SEARCH_OBJECTS, 
-    DESCRIBE_OBJECT, 
-    QUERY_RECORDS, 
+    SEARCH_OBJECTS,
+    DESCRIBE_OBJECT,
+    QUERY_RECORDS,
     AGGREGATE_QUERY,
     DML_RECORDS,
     MANAGE_OBJECT,
@@ -214,7 +214,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             orderBy: obj.orderBy as string | undefined,
             limit: obj.limit as number | undefined
           })),
-          withClauses: searchArgs.withClauses as any[] | undefined,
+          withClauses: searchArgs.withClauses as WithClause[] | undefined,
           updateable: searchArgs.updateable as boolean | undefined,
           viewable: searchArgs.viewable as boolean | undefined
         };
@@ -324,7 +324,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           isError: true,
         };
     }
-  } catch (error: any) {
+  } catch (error) {
     return {
       content: [{
         type: "text",

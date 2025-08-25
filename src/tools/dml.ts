@@ -1,5 +1,5 @@
 import { Tool } from "@modelcontextprotocol/sdk/types.js";
-import { DMLResult } from "../types/salesforce.js";
+import { DMLResult, SalesforceError } from "../types/salesforce.js";
 
 export const DML_RECORDS: Tool = {
   name: "salesforce_dml_records",
@@ -56,7 +56,7 @@ export async function handleDMLRecords(conn: any, args: DMLArgs) {
       result = await conn.sobject(objectName).update(records);
       break;
     case 'delete':
-      result = await conn.sobject(objectName).destroy(records.map(r => r.Id));
+      result = await conn.sobject(objectName).destroy(records.map((r: any) => r.Id));
       break;
     case 'upsert':
       if (!externalIdField) {
@@ -84,7 +84,7 @@ export async function handleDMLRecords(conn: any, args: DMLArgs) {
       if (!r.success && r.errors) {
         responseText += `Record ${idx + 1}:\n`;
         if (Array.isArray(r.errors)) {
-          r.errors.forEach((error: any) => {
+          r.errors.forEach((error: SalesforceError) => {
             responseText += `  - ${error.message}`;
             if (error.statusCode) {
               responseText += ` [${error.statusCode}]`;
@@ -96,7 +96,7 @@ export async function handleDMLRecords(conn: any, args: DMLArgs) {
           });
         } else {
           // Single error object
-          const error = r.errors as any;
+          const error = r.errors as SalesforceError;
           responseText += `  - ${error.message}`;
           if (error.statusCode) {
             responseText += ` [${error.statusCode}]`;

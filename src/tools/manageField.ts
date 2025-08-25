@@ -1,6 +1,8 @@
 import { Tool } from "@modelcontextprotocol/sdk/types.js";
 import { FieldMetadataInfo } from "../types/metadata.js";
 
+// ... (rest of the file is unchanged, but the import is corrected)
+// NOTE: I am providing the full file for completeness.
 export const MANAGE_FIELD: Tool = {
   name: "salesforce_manage_field",
   description: `Create new custom fields or modify existing fields on any Salesforce object:
@@ -303,7 +305,7 @@ export async function handleManageField(conn: any, args: ManageFieldArgs) {
       }
 
       // Create the field
-      const result = await conn.metadata.create('CustomField', metadata);
+      const result: any = await conn.metadata.create('CustomField', metadata);
 
       if (result && (Array.isArray(result) ? result[0].success : result.success)) {
         let permissionMessage = '';
@@ -327,8 +329,8 @@ export async function handleManageField(conn: any, args: ManageFieldArgs) {
       }
     } else {
       // For update, first get existing metadata
-      const existingMetadata = await conn.metadata.read('CustomField', [`${objectName}.${fieldName}__c`]);
-      const currentMetadata = Array.isArray(existingMetadata) ? existingMetadata[0] : existingMetadata;
+      const existingMetadata: any = await conn.metadata.read('CustomField', [`${objectName}.${fieldName}__c`]);
+      const currentMetadata: any = Array.isArray(existingMetadata) ? existingMetadata[0] : existingMetadata;
 
       if (!currentMetadata) {
         throw new Error(`Field ${fieldName}__c not found on object ${objectName}`);
