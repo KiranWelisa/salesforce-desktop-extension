@@ -1,0 +1,57 @@
+{
+  "name": "salesforce-dxt",
+  "version": "1.0.0",
+  "description": "Salesforce Claude Desktop Extension - Query, modify, and manage Salesforce data and metadata",
+  "main": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "salesforce-dxt": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "manifest.json",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "rebuild": "npm run clean && npm run build",
+    "test": "node --test",
+    "lint": "tsc --noEmit",
+    "prepare": "npm run build",
+    "start": "node dist/index.js"
+  },
+  "keywords": [
+    "salesforce",
+    "claude",
+    "dxt",
+    "mcp",
+    "ai",
+    "crm",
+    "soql",
+    "apex",
+    "extension"
+  ],
+  "author": "Salesforce Extension Team",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.3",
+    "jsforce": "^3.10.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/salesforce-dxt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/salesforce-dxt/issues"
+  },
+  "homepage": "https://github.com/yourusername/salesforce-dxt#readme"
+}
