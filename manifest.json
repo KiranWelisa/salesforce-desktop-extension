@@ -1,82 +1,121 @@
 {
-  "name": "salesforce",
+  "dxt_version": "0.1",
+  "name": "salesforce-desktop-extension",
+  "display_name": "Salesforce",
   "version": "1.0.0",
   "description": "Salesforce integration for Claude Desktop - Query, modify, and manage Salesforce data and metadata",
-  "author": "Salesforce Extension Team",
+  "author": {
+    "name": "Salesforce Extension Team"
+  },
   "license": "MIT",
-  "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdOYW1lPSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTkuNSA0QzEwLjMyODQgNDExIDQuNjcxNTcgMTEgNS41IDExQzEyLjMyODQgMTEgMTMgMTAuMzI4NCAxMyA5LjVDMTMgOC42NzE1NyAxMi4zMjg0IDggMTEuNSA4QzEwLjY3MTYgOCAxMCA3LjMyODQzIDEwIDYuNUMxMCA1LjY3MTU3IDEwLjY3MTYgNSAxMS41IDVDMTQ0IDEzLjU1MjMgNCAxMyA0LjQ0NzcyIDQgOUM0IDUuNjg2MjkgNi42ODYyOSA0IDkuNSA0WiIgZmlsbD0iIzAwQTFERiIvPjxwYXRoIGQ9Ik0xNC41IDIwQzEzLjY3MTYgMjAgMTMgMTkuMzI4NCAxMyAxOC41QzEzIDE3LjY3MTYgMTMuNjcxNiAxNyAxNC41IDE3QzE1LjMyODQgMTcgMTYgMTYuMzI4NCAxNiAxNS41QzE2IDE0LjY3MTYgMTUuMzI4NCAxNCAxNC41IDE0QzEyLjU2NyAxNCAxMSAxMi40MzMgMTEgMTAuNUMxMSA4LjU2NyAxMi41NjcgNyAxNC41IDdDMTcuNTM3NiA3IDIwIDkuNDYyNDMgMjAgMTIuNUMyMCAxNS41Mzc2IDE3LjUzNzYgMTggMTQuNSAxOEMxMy42NzE2IDE4IDEzIDE4LjY3MTYgMTMgMTkuNUMxMyAyMC4zMjg0IDEzLjY3MTYgMjEgMTQuNSAyMVYyMFoiIGZpbGw9IiMwMEExREYiLz48L3N2Zz4=",
-  "main": "dist/index.js",
-  "configuration": {
-    "type": "object",
-    "properties": {
-      "connectionType": {
-        "type": "string",
-        "title": "Connection Type",
-        "description": "Authentication method for Salesforce",
-        "enum": ["User_Password", "OAuth_2.0_Client_Credentials"],
-        "default": "User_Password"
-      },
-      "instanceUrl": {
-        "type": "string",
-        "title": "Instance URL",
-        "description": "Salesforce instance URL (e.g., https://login.salesforce.com or https://your-domain.my.salesforce.com)",
-        "default": "https://login.salesforce.com"
-      },
-      "username": {
-        "type": "string",
-        "title": "Username",
-        "description": "Salesforce username (for User_Password auth)"
-      },
-      "password": {
-        "type": "string",
-        "title": "Password",
-        "description": "Salesforce password (for User_Password auth)",
-        "secret": true
-      },
-      "securityToken": {
-        "type": "string",
-        "title": "Security Token",
-        "description": "Salesforce security token (for User_Password auth)",
-        "secret": true
-      },
-      "clientId": {
-        "type": "string",
-        "title": "Client ID",
-        "description": "OAuth 2.0 Client ID (for OAuth_2.0_Client_Credentials auth)"
-      },
-      "clientSecret": {
-        "type": "string",
-        "title": "Client Secret",
-        "description": "OAuth 2.0 Client Secret (for OAuth_2.0_Client_Credentials auth)",
-        "secret": true
-      },
-      "apiVersion": {
-        "type": "string",
-        "title": "API Version",
-        "description": "Salesforce API version",
-        "default": "58.0"
-      },
-      "timeout": {
-        "type": "number",
-        "title": "Timeout (ms)",
-        "description": "Request timeout in milliseconds",
-        "default": 30000,
-        "minimum": 5000,
-        "maximum": 120000
-      },
-      "logLevel": {
-        "type": "string",
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/dist/index.js"
+      ],
+      "env": {
+        "SALESFORCE_CONNECTION_TYPE": "${user_config.connectionType}",
+        "SALESFORCE_INSTANCE_URL": "${user_config.instanceUrl}",
+        "SALESFORCE_USERNAME": "${user_config.username}",
+        "SALESFORCE_PASSWORD": "${user_config.password}",
+        "SALESFORCE_TOKEN": "${user_config.securityToken}",
+        "SALESFORCE_CLIENT_ID": "${user_config.clientId}",
+        "SALESFORCE_CLIENT_SECRET": "${user_config.clientSecret}",
+        "SALESFORCE_API_VERSION": "${user_config.apiVersion}",
+        "SALESFORCE_TIMEOUT": "${user_config.timeout}",
+        "SALESFORCE_LOG_LEVEL": "${user_config.logLevel}"
+      }
+    }
+  },
+  "user_config": [
+    {
+      "name": "connectionType",
+      "type": "select",
+      "title": "Connection Type",
+      "description": "Authentication method for Salesforce",
+      "options": [
+        {
+          "label": "Username & Password",
+          "value": "User_Password"
+        },
+        {
+          "label": "OAuth 2.0 Client Credentials",
+          "value": "OAuth_2.0_Client_Credentials"
+        }
+      ],
+      "default": "User_Password",
+      "required": true
+    },
+    {
+      "name": "instanceUrl",
+      "type": "string",
+      "title": "Instance URL",
+      "description": "Salesforce instance URL (e.g., https://login.salesforce.com or https://your-domain.my.salesforce.com)",
+      "default": "https://login.salesforce.com",
+      "required": true
+    },
+    {
+      "name": "username",
+      "type": "string",
+      "title": "Username",
+      "description": "Salesforce username (for User_Password auth)"
+    },
+    {
+      "name": "password",
+      "type": "string",
+      "title": "Password",
+      "description": "Salesforce password (for User_Password auth)",
+      "sensitive": true
+    },
+    {
+      "name": "securityToken",
+      "type": "string",
+      "title": "Security Token",
+      "description": "Salesforce security token (for User_Password auth)",
+      "sensitive": true
+    },
+    {
+      "name": "clientId",
+      "type": "string",
+      "title": "Client ID",
+      "description": "OAuth 2.0 Client ID (for OAuth_2.0_Client_Credentials auth)"
+    },
+    {
+      "name": "clientSecret",
+      "type": "string",
+      "title": "Client Secret",
+      "description": "OAuth 2.0 Client Secret (for OAuth_2.0_Client_Credentials auth)",
+      "sensitive": true
+    },
+    {
+      "name": "apiVersion",
+      "type": "string",
+      "title": "API Version",
+      "description": "Salesforce API version",
+      "default": "58.0"
+    },
+    {
+      "name": "timeout",
+      "type": "number",
+      "title": "Timeout (ms)",
+      "description": "Request timeout in milliseconds",
+      "default": 30000
+    },
+    {
+        "name": "logLevel",
+        "type": "select",
         "title": "Log Level",
         "description": "Logging level for debugging",
-        "enum": ["error", "warn", "info", "debug"],
+        "options": [
+            {"label": "Error", "value": "error"},
+            {"label": "Warn", "value": "warn"},
+            {"label": "Info", "value": "info"},
+            {"label": "Debug", "value": "debug"}
+        ],
         "default": "info"
-      }
-    },
-    "required": []
-  },
-  "mcp": {
-    "type": "stdio",
-    "command": "node",
-    "args": ["dist/index.js"]
-  }
+    }
+  ]
 }
