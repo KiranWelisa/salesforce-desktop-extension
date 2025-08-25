@@ -4,9 +4,6 @@
   "description": "Salesforce Claude Desktop Extension - Query, modify, and manage Salesforce data and metadata",
   "main": "dist/index.js",
   "type": "module",
-  "bin": {
-    "salesforce-dxt": "dist/index.js"
-  },
   "files": [
     "dist",
     "manifest.json",
@@ -14,44 +11,31 @@
   ],
   "scripts": {
     "build": "tsc",
-    "dev": "tsc --watch",
     "clean": "rm -rf dist",
     "rebuild": "npm run clean && npm run build",
     "test": "node --test",
     "lint": "tsc --noEmit",
-    "prepare": "npm run build",
-    "start": "node dist/index.js"
+    "prepare": "npm run build"
   },
   "keywords": [
     "salesforce",
     "claude",
     "dxt",
     "mcp",
-    "ai",
-    "crm",
-    "soql",
-    "apex",
-    "extension"
+    "ai"
   ],
   "author": "Salesforce Extension Team",
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.17.3",
-    "jsforce": "^3.10.3"
+    "dotenv": "^16.4.5",
+    "jsforce": "^1.11.1"
   },
   "devDependencies": {
-    "@types/node": "^24.3.0",
-    "typescript": "^5.7.2"
+    "@types/node": "^20.11.24",
+    "typescript": "^5.3.3"
   },
   "engines": {
     "node": ">=18.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/yourusername/salesforce-dxt.git"
-  },
-  "bugs": {
-    "url": "https://github.com/yourusername/salesforce-dxt/issues"
-  },
-  "homepage": "https://github.com/yourusername/salesforce-dxt#readme"
+  }
 }
