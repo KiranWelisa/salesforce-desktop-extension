@@ -14,7 +14,8 @@ import { DESCRIBE_OBJECT, handleDescribeObject } from "./tools/describe.js";
 import { QUERY_RECORDS, handleQueryRecords, QueryArgs } from "./tools/query.js";
 import { AGGREGATE_QUERY, handleAggregateQuery, AggregateQueryArgs } from "./tools/aggregateQuery.js";
 import { DML_RECORDS, handleDMLRecords, DMLArgs } from "./tools/dml.js";
-import { MANAGE_OBJECT, handleManageObject, ManageObjectArgs } from "./tools/manageObject.js";
+import { manageObject, ManageObjectArgs } from "./tools/manageObject.js";
+const MANAGE_OBJECT = { name: "MANAGE_OBJECT" };
 import { MANAGE_FIELD, handleManageField, ManageFieldArgs } from "./tools/manageField.js";
 import { MANAGE_FIELD_PERMISSIONS, handleManageFieldPermissions, ManageFieldPermissionsArgs } from "./tools/manageFieldPermissions.js";
 import { SEARCH_ALL, handleSearchAll, SearchAllArgs, WithClause } from "./tools/searchAll.js";
@@ -114,7 +115,7 @@ const toolRegistry = {
         nameFieldFormat: objectArgs.nameFieldFormat as string | undefined,
         sharingModel: objectArgs.sharingModel as 'ReadWrite' | 'Read' | 'Private' | 'ControlledByParent' | undefined
       };
-      return handleManageObject(conn, validatedArgs);
+      return manageObject(conn, validatedArgs);
     },
   },
   [MANAGE_FIELD.name]: {
